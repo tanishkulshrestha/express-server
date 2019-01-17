@@ -1,0 +1,21 @@
+{
+  "name": "express-server",
+  "version": "1.0.0",
+  "description": "An app for training purpose",
+  "main": "index.js",
+  "scripts": {
+    "pattern:diamond":"nodemon extra/patterns/diamond.js",
+    "pattern:equilateral-triangle":"nodemon extra/patterns/equilateral-triangle.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tanishkulshrestha/express-server.git"
+  },
+  "author": "Tanish Kulshrestha",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tanishkulshrestha/express-server/issues"
+  },
+  "homepage": "https://github.com/tanishkulshrestha/express-server#readme"
+}
