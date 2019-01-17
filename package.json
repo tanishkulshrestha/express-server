@@ -6,6 +6,8 @@
   "scripts": {
     "pattern:diamond":"nodemon extra/patterns/diamond.js",
     "pattern:equilateral-triangle":"nodemon extra/patterns/equilateral-triangle.js",
+    "pattern:validation":"nodemon extra/utils/validation.js",
+    "pattern:permission":"nodemon extra/utils/permissions.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
