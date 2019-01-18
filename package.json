@@ -4,11 +4,7 @@
   "description": "An app for training purpose",
   "main": "index.js",
   "scripts": {
-    "pattern:diamond":"nodemon extra/patterns/diamond.js",
-    "pattern:equilateral-triangle":"nodemon extra/patterns/equilateral-triangle.js",
-    "pattern:validation":"nodemon extra/utils/validation.js",
-    "pattern:permission":"nodemon extra/utils/permissions.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "babel-node extra --presets env"
   },
   "repository": {
     "type": "git",
@@ -19,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/tanishkulshrestha/express-server/issues"
   },
-  "homepage": "https://github.com/tanishkulshrestha/express-server#readme"
+  "homepage": "https://github.com/tanishkulshrestha/express-server#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
+  }
 }
