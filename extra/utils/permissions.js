@@ -1,46 +1,30 @@
-let permissions = {
-  'getUsers': {
-  all: ['head-trainer'],
-  read : ['trainee', 'trainer'],
-  write : ['trainer'],
-  delete: [],
+const GET_USERS = "getUsers";
+const HEAD_TRAINER = "head-trainer";
+const TRAINEE = "trainee";
+const TRAINER = "trainer";
+
+const permissions = {
+  GET_USERS: {
+    all: [HEAD_TRAINER],
+    read: [TRAINEE, TRAINER],
+    write: [TRAINER],
+    delete: []
   }
+};
+
+function hasPermission(moduleName, role, permissionType) {
+  if (permissions[moduleName]) {
+    if (
+      permissions[moduleName][permissionType].includes(role) ||
+      permissions[moduleName]["all"].includes(role)
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    return false;
   }
-  function hasPermission ( moduleName , role , permissionType )
-  {
-    let {getUsers : {  all : [ a ] , read : [ b , c ] , write : [ d ] , delete : [] } } = permissions;
-    if( role == a)
-    {
-      if( permissionType == "all" || permissionType == "write" || permissionType == "read" || permissionType == "delete")
-      {
-        return (console.log("True"));
-      }
-      else
-      {
-        return (console.log("False"));
-      }
-    }
-    if( role == b)
-    {
-      if(permissionType == "read" )
-      {
-        return (console.log("True"));
-      }
-      else
-      {
-        return (console.log("False"));
-      }
-    }
-    if( role == c)
-    {
-      if(permissionType == "read" || permissionType == "write")
-      {
-      return (console.log("True"));
-      }
-      else
-      {
-        return (console.log("False"));
-      }
-    }
-  }
-hasPermission ("getUsers" , "trainee" , "write" );
+}
+
+console.log(hasPermission("GET_USERS", "trainee", "write"));
