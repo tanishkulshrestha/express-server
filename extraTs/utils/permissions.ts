@@ -14,7 +14,7 @@ export default function hasPermission(
 ) {
   if (permissions[moduleName]) {
     if (
-      permissions[moduleName][permissionType]||
+      permissions[moduleName][permissionType] ||
       permissions[moduleName].all[role]
     ) {
       console.log("This user has permission.");

@@ -1,4 +1,10 @@
-import { GET_USERS,PUT_USERS , MODIFY_USERS,VIEW_USERS,STATUS_USERS} from "./constants";
+import {
+  GET_USERS,
+  PUT_USERS,
+  MODIFY_USERS,
+  VIEW_USERS,
+  STATUS_USERS
+} from "./constants";
 
 export interface IPermission {
   GET_USERS: {

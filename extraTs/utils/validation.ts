@@ -1,17 +1,20 @@
-import { IUsers} from './../interfaces';
+import { IUsers } from "./../interfaces";
 import { validateEmail } from "./helpers";
 
-export default function validateUsers(users:IUsers[]): void {
-  let validUsers: IUsers[] = [] ;
+export default function validateUsers(users: IUsers[]): void {
+  let validUsers: IUsers[] = [];
   let invalidUsers: IUsers[] = [];
   users.forEach(function(user) {
     let { traineeEmail, reviewerEmail } = user;
     if (validateEmail(traineeEmail) && validateEmail(reviewerEmail)) {
-      console.log("True",user);
+      console.log(
+        `The user ${user.reviewerEmail} and ${user.traineeEmail} is valid.`
+      );
       validUsers.push(user);
-
     } else {
-      console.log("False",user);
+      console.log(
+        `The user ${user.reviewerEmail} and ${user.traineeEmail} is not valid.`
+      );
       invalidUsers.push(user);
     }
   });

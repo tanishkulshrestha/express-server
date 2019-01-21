@@ -1,10 +1,11 @@
+import { IUsers } from "./interfaces";
 import { diamond, triangle } from "./patterns";
 import { hasPermission, validateUsers } from "./utils";
 diamond(3);
 triangle(3);
 hasPermission("MODIFY_USERS", "trainer", "write");
-hasPermission("VIEW_USERS","trainee","write");
-const users = [
+hasPermission("VIEW_USERS", "trainee", "write");
+const users: IUsers[] = [
   {
     traineeEmail: "trainee1@successive.tech",
     reviewerEmail: "reviewer1@successive.tech"

@@ -38,13 +38,5 @@ const permissions: IPermission = {
     delete: []
   }
 };
-export {
-  GET_USERS,PUT_USERS,VIEW_USERS,MODIFY_USERS,STATUS_USERS,
-  HEAD_TRAINER,
-  TRAINEE,
-  TRAINER,
-  permissions,
-  moduleName,
-  permissionType,
-  role
-};
+export { GET_USERS , PUT_USERS , VIEW_USERS , MODIFY_USERS , STATUS_USERS , HEAD_TRAINER , TRAINEE , TRAINER,
+  permissions , moduleName , permissionType , role };
