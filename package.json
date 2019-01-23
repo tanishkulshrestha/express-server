@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "babel-node extra --presets env",
-    "extraTs": "tsc-watch --project . --onSuccess \"npm run nodemon\"",
+    "clean": "rm -r dist && mkdir dist",
+    "prestart": "npm run clean",
+    "start": "tsc-watch --project . --onSuccess \"npm run nodemon\"",
     "nodemon": "nodemon ./dist/index.js"
   },
   "repository": {
@@ -18,10 +20,15 @@
     "url": "https://github.com/tanishkulshrestha/express-server/issues"
   },
   "homepage": "https://github.com/tanishkulshrestha/express-server#readme",
-  "dependencies": {},
+  "dependencies": {
+    "@types/node": "^10.12.18",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4"
+  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
+    "gulp-clean": "^0.4.0",
     "tsc-watch": "^1.0.31",
     "typescript": "^3.2.4"
   }
