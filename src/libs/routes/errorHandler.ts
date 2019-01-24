@@ -1,4 +1,5 @@
 export default function errorHandler(err, req, res, next) {
+
   console.log("Inside ErrorHandler");
 
   const status = err.status || 500;
