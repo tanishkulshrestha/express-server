@@ -1,13 +1,14 @@
 import { Request, Response, NextFunction } from "express";
 import { successHandler } from "../trainee";
-let instance = null;
 class TraineeController {
-  constructor() {
-    if (!instance) {
-      instance = this;
+  private static instance: TraineeController;
+  public static getInstance() {
+    if (!TraineeController.instance) {
+      TraineeController.instance = new TraineeController();
     }
-    return instance;
+    return TraineeController.instance;
   }
+
   get(req: Request, res: Response) {
     const data = [
       {
@@ -45,9 +46,13 @@ class TraineeController {
         .send(successHandler("Successfully Updated Trainee", data));
   }
   remove(req: Request, res: Response) {
-    const { name, id } = req.body;
-
-    res.status(200).send(successHandler("Successfully Updated Trainee", ""));
+    const id = req.params.id;
+    console.log(req.params.id);
+    console.log(id);
+    // res.json({ message: `Contact ${id} deleted.` });
+    res
+      .status(200)
+      .send(successHandler(`Successfully Deleted ${id} Trainee`, ""));
   }
 }
-export default new TraineeController();
+export default TraineeController.getInstance();

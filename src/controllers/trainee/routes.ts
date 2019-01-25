@@ -6,5 +6,5 @@ const traineeRoute: express.Router = express.Router();
 traineeRoute.get("/", trainee.get);
 traineeRoute.post("/", trainee.create);
 traineeRoute.put("/", trainee.update);
-traineeRoute.delete("/", trainee.remove);
+traineeRoute.delete("/:id", trainee.remove);
 export default traineeRoute;
