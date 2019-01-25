@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { successHandler } from "../trainee";
+import successHandler from "../../libs/routes/successHandler";
 class TraineeController {
   private static instance: TraineeController;
   public static getInstance() {
@@ -10,6 +10,7 @@ class TraineeController {
   }
 
   get(req: Request, res: Response) {
+    console.log("Get method");
     const data = [
       {
         name: "trainee1"
@@ -18,9 +19,17 @@ class TraineeController {
         name: "trainee2"
       }
     ];
+    console.log(data);
+    if(!req.query.id){
     res.status(200).send(successHandler("Successfully fetch trainees", data));
-    console.log("Successfully get Trainees");
-  }
+    console.log("Successfully fetch trainees");
+    }
+    else{
+      const id=JSON.parse(req.query.id)-1;
+      console.log(id);
+    res.status(200).send(successHandler("Successfully fetch trainees", data[id]));
+    console.log("Successfully fetch 1 trainee");
+  }}
   create(req: Request, res: Response, next: NextFunction) {
     const { name, id } = req.body;
     const data = [{ name, id }];
@@ -47,9 +56,6 @@ class TraineeController {
   }
   remove(req: Request, res: Response) {
     const id = req.params.id;
-    console.log(req.params.id);
-    console.log(id);
-    // res.json({ message: `Contact ${id} deleted.` });
     res
       .status(200)
       .send(successHandler(`Successfully Deleted ${id} Trainee`, ""));
