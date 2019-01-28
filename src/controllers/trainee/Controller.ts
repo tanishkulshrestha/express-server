@@ -20,16 +20,18 @@ class TraineeController {
       }
     ];
     console.log(data);
-    if(!req.query.id){
-    res.status(200).send(successHandler("Successfully fetch trainees", data));
-    console.log("Successfully fetch trainees");
-    }
-    else{
-      const id=JSON.parse(req.query.id)-1;
+    if (!req.query.id) {
+      res.status(200).send(successHandler("Successfully fetch trainees", data));
+      console.log("Successfully fetch trainees");
+    } else {
+      const id = JSON.parse(req.query.id) - 1;
       console.log(id);
-    res.status(200).send(successHandler("Successfully fetch trainees", data[id]));
-    console.log("Successfully fetch 1 trainee");
-  }}
+      res
+        .status(200)
+        .send(successHandler("Successfully fetch trainees", data[id]));
+      console.log("Successfully fetch 1 trainee");
+    }
+  }
   create(req: Request, res: Response, next: NextFunction) {
     const { name, id } = req.body;
     const data = [{ name, id }];

@@ -11,7 +11,7 @@ const validation = {
     },
     name: {
       required: true,
-      regex: "",
+      regex: /^[a-zA-Z ]{2,30}$/,
       in: ["body"],
       errorMessage: "Name is required"
     }
