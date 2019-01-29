@@ -49,8 +49,6 @@ class TraineeController {
     const data = [{ name, id }];
     if (!id) {
       next({ status: "Bad Request", message: "ID is Required" });
-    } else if (!name) {
-      next({ status: "Bad Request", message: "Name is Required" });
     } else
       res
         .status(200)

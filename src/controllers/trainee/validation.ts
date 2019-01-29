@@ -6,7 +6,7 @@ const validation = {
       in: ["body"],
       custom: function(value) {
         console.log("Value", value);
-        throw { error: "Error Occurred", message: "Message" };
+        //throw { error: "Error Occurred", message: "Message" };
       }
     },
     name: {
@@ -49,7 +49,9 @@ const validation = {
       in: ["body"],
       required: true,
       isObject: true,
-      custom: function(dataToUpdate) {}
+      custom: function(dataToUpdate) {
+        console.log("Inside DataToUpdate");
+      }
     }
   }
 };

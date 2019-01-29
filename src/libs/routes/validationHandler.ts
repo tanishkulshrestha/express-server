@@ -5,7 +5,7 @@ export default config => (req, res, next) => {
   keys.forEach(key => {
     const item = config[key];
     console.log("Items are ", item);
-    const values = item.in.map(item => {
+    let values = item.in.map(item => {
       console.log("REQUEST---", req[item][key]);
       return req[item][key];
     });
@@ -32,7 +32,10 @@ export default config => (req, res, next) => {
         }
         return values[key];
       });
-      if ( item.regex && !new RegExp(item.regex).test(validatedValues.toString())) {
+      if (
+        item.regex &&
+        !new RegExp(item.regex).test(validatedValues.toString())
+      ) {
         console.log(`${validatedValues} does not matches with Regex`);
         next({
           status: "Bad Request",
@@ -42,42 +45,36 @@ export default config => (req, res, next) => {
             "Error Message"
         });
       }
-      if(item.isObject && !(typeof values[key] == "object")) {
-        console.log(`${validatedValues} is not Object`);
-        next({
-          status: "Bad Request",
-          message:
-            item.errorMessage ||
-            `${validatedValues} is not Object` ||
-            "Error Message"
-        });
+
+      if (item && item.isObject) {
+        const variable = values.filter(item => item);
+        if (typeof variable[0] != "object") {
+          next({
+            status: "Bad Request",
+            message: `${key} should be object` || "Error Occurred"
+          });
+        }
+      }
+      if (item.custom && item) {
+        item.custom(values);
       }
     }
-    if (item && !(item.required)){
-      const validatedValues = values.filter(item => item);
-      if (isNaN(req.query.skip) && isNaN(req.query.limit)) {
-        console.log("Number----")
+    if (item && !item.required) {
+      console.log("*****", values);
+      if (isNaN(values)) {
+        console.log("Not a Number----");
         next({
           status: "Bad Request",
-          message:
-            item.errorMessage ||
-            "Error Message"
+          message: item.errorMessage || "Error Message"
         });
+      } else {
+        if (values === "") {
+          values = item.default;
+          console.log(key, "=", JSON.parse(values));
+        } else {
+          console.log(key, "=", JSON.parse(values));
+        }
       }
-
-      console.log("SKIP----",req.query);
-      var val=parseInt(req.query,10) ;
-      //console.log("SKIP=",skip)
-console.log("****",val);
-      //  console.log(skip.valueOf());
-      //  console.log(limit.valueOf());
-       if(isNaN(val)){
-        console.log("888888",item.default);
-         val=values ||item.default;
-        console.log("val is ",val);
-
-
-       }
     }
   });
   next();
