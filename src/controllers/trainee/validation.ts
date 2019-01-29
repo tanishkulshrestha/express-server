@@ -11,7 +11,7 @@ const validation = {
     },
     name: {
       required: true,
-      regex: /^[a-zA-Z ]{2,30}$/,
+      regex: /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/,
       in: ["body"],
       errorMessage: "Name is required"
     }
