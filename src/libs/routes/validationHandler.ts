@@ -20,8 +20,9 @@ export default config => (req, res, next) => {
         });
       }
       Object.keys(values).map(function(key) {
-        if (item.string && !(typeof values[key] == "string")) {
-          console.log(`${validatedValues} is not String`);
+        if (item.string && item) {
+          if(!(typeof values[key] == "string")){
+          console.log(`${values[key]} is not String`);
           next({
             status: "Bad Request",
             message:
@@ -31,7 +32,7 @@ export default config => (req, res, next) => {
           });
         }
         return values[key];
-      });
+      }});
       if (
         item.regex &&
         !new RegExp(item.regex).test(validatedValues.toString())
