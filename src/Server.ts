@@ -1,6 +1,6 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
-import { notFoundRoutes, errorHandler, successHandler } from "./libs/routes";
+import { notFoundRoutes, errorHandler,successHandler} from "./libs/routes";
 import router from "./router";
 export class Server {
   private app: express.Express;

@@ -1,5 +1,7 @@
-export default (message: string, data: any) => ({
-  status: "OK",
-  message: message || "Successful",
-  data: data || null
-});
+export default function successHandler(message: string, data: any) {
+  return {
+    status: "OK",
+    message: message || "Successful",
+    data: data || null,
+  }
+}
