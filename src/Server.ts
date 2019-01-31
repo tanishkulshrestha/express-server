@@ -43,6 +43,6 @@ export class Server {
         },
         console.log(`App is running on ${port}`)
       );
-    });
+    }).catch(()=>{console.log("Error in connection")});
   }
 }
