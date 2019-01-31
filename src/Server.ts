@@ -1,7 +1,8 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
-import { notFoundRoutes, errorHandler,successHandler} from "./libs/routes";
+import { notFoundRoutes, errorHandler, successHandler } from "./libs/routes";
 import router from "./router";
+import Database from "./libs/Database";
 export class Server {
   private app: express.Express;
   constructor(private config) {
@@ -32,14 +33,16 @@ export class Server {
   public run() {
     const {
       app,
-      config: { port }
+      config: { port, mongoUri }
     } = this;
-    app.listen(
-      port,
-      err => {
-        if (err) throw err;
-      },
-      console.log(`App is running on ${port}`)
-    );
+    Database.open(mongoUri).then(() => {
+      app.listen(
+        port,
+        err => {
+          if (err) throw err;
+        },
+        console.log(`App is running on ${port}`)
+      );
+    });
   }
 }
