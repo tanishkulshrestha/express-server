@@ -33,9 +33,9 @@ export class Server {
   public run() {
     const {
       app,
-      config: { port, MongoUri }
+      config: { port, mongoUri }
     } = this;
-    Database.open(MongoUri).then(() => {
+    Database.open(mongoUri).then(() => {
       app.listen(
         port,
         err => {

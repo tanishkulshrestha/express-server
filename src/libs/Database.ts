@@ -1,11 +1,11 @@
 import * as mongoose from "mongoose";
 
 export default class Database {
-  static open(MongoUri) {
+  static open(mongoUri) {
     return new Promise((resolve, reject) => {
       mongoose
         .connect(
-          MongoUri,
+          mongoUri,
           { useNewUrlParser: true }
         )
         .then(() => {

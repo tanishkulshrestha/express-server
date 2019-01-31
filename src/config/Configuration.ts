@@ -6,7 +6,7 @@ config();
 const Configuration: IConfig = Object.freeze({
   port: process.env.PORT,
   key: process.env.key,
-  MongoUri: process.env.MONGO_URL
+  mongoUri: process.env.MONGO_URL
 });
 
 export default Configuration;
