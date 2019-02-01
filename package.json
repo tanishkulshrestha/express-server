@@ -5,11 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "babel-node extra --presets env",
-    "clean": "rm -r dist && mkdir dist",
-    "prestart": "npm run clean",
-    "start": "tsc-watch --project . --onSuccess \"npm run nodemon\"",
+    "clean": "rm -r dist",
+    "start": "npm run clean && tsc-watch --project . --onSuccess \"npm run nodemon\"",
     "nodemon": "nodemon ./dist/index.js",
-    "pre-commit":"lint",
+    "pre-commit": "lint",
     "lint": "./node_modules/tslint/bin/tslint -c tslint.json -p tsconfig.json --exclude 'node_modules/**/*.{j,t}s'",
     "lint:fix": "yarn lint -- --fix"
   },
