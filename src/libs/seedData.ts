@@ -1,11 +1,14 @@
 import * as mongoose from "mongoose";
 import UserRepository from "../repositories/user/UserRepository";
-import { rejects } from "assert";
 
 function seed() {
-  console.log("--------------");
+  console.log("............");
 
-  const repository = new UserRepository().create({ id: "4", name: "abc" });
+  const repository = new UserRepository();
+  // repository.create({ id: "4", name: "abc" });
+  // repository.delete({ name: "xyz" });
+  // repository.update({ name: "xyz" });
+  // repository.read({});
 }
 
 export default seed;

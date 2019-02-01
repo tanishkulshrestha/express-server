@@ -1,12 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 import successHandler from "../../libs/routes/successHandler";
-class TraineeController {
-  private static instance: TraineeController;
+class UserController {
+  private static instance: UserController;
   public static getInstance() {
-    if (!TraineeController.instance) {
-      TraineeController.instance = new TraineeController();
+    if (!UserController.instance) {
+      UserController.instance = new UserController();
     }
-    return TraineeController.instance;
+    return UserController.instance;
   }
 
   get(req: Request, res: Response) {
@@ -22,14 +22,14 @@ class TraineeController {
     console.log(data);
     if (!req.query.id) {
       res.status(200).send(successHandler("Successfully fetch Users", data));
-      console.log("Successfully fetch trainees");
+      console.log("Successfully fetch Users");
     } else {
       const id = JSON.parse(req.query.id) - 1;
       console.log(id);
       res
         .status(200)
-        .send(successHandler("Successfully fetch trainees", data[id]));
-      console.log("Successfully fetch 1 trainee");
+        .send(successHandler("Successfully fetch User", data[id]));
+      console.log("Successfully fetch 1 User");
     }
   }
   create(req: Request, res: Response, next: NextFunction) {
@@ -42,7 +42,7 @@ class TraineeController {
     } else
       res
         .status(200)
-        .send(successHandler("Successfully Created Trainee", data));
+        .send(successHandler("Successfully Created Users", data));
   }
   update(req: Request, res: Response, next: NextFunction) {
     const { name, id } = req.body;
@@ -52,13 +52,13 @@ class TraineeController {
     } else
       res
         .status(200)
-        .send(successHandler("Successfully Updated Trainee", data));
+        .send(successHandler("Successfully Updated Users", data));
   }
   remove(req: Request, res: Response) {
     const id = req.params.id;
     res
       .status(200)
-      .send(successHandler(`Successfully Deleted ${id} Trainee`, ""));
+      .send(successHandler(`Successfully Deleted ${id} Users`, ""));
   }
 }
-export default TraineeController.getInstance();
+export default UserController.getInstance();
