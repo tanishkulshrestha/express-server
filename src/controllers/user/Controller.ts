@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import successHandler from "../../libs/routes/successHandler";
+import UserRepository  from "../../repositories/user/UserRepository"
 class UserController {
   private static instance: UserController;
   public static getInstance() {
@@ -10,28 +11,19 @@ class UserController {
   }
 
   get(req: Request, res: Response) {
-    console.log("Get method");
-    const data = [
-      {
-        name: "user1"
-      },
-      {
-        name: "user2"
-      }
-    ];
-    console.log(data);
-    if (!req.query.id) {
-      res.status(200).send(successHandler("Successfully fetch Users", data));
-      console.log("Successfully fetch Users");
-    } else {
-      const id = JSON.parse(req.query.id) - 1;
-      console.log(id);
-      res
-        .status(200)
-        .send(successHandler("Successfully fetch User", data[id]));
-      console.log("Successfully fetch 1 User");
-    }
+    console.log(req.body.user);
+    // const repository= new UserRepository();
+    // console.log("Get method");
+    // console.log("----------------->>>>",req.query.id);
+    // repository.read({_id:req.query.id})
+    // .then((data) => {
+    //   console.log(data);
+    //   res.status(200).send(successHandler("Successfully fetch user", data));
+    // })
+    // .catch((err) => { throw err }  );
+    //   console.log("Successfully fetch user");
   }
+
   create(req: Request, res: Response, next: NextFunction) {
     const { name, id } = req.body;
     const data = [{ name, id }];

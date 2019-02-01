@@ -1,10 +1,13 @@
+import { IUserRead } from './../interface';
 import Configuration from "../../config/Configuration";
 import { NextFunction } from "express";
 import * as jwt from "jsonwebtoken";
 import hasPermission from "./hasPermission";
 import { TRAINEEE } from "../constants";
+import UserRepository from './../../repositories/user/UserRepository'
+
 export default (moduleName, permissionType) => (
-  req: Request,
+  req: IUserRead,
   res: Response,
   next: NextFunction
 ) => {
@@ -17,16 +20,50 @@ export default (moduleName, permissionType) => (
   console.log("Key is :", key);
   const user = jwt.verify(token, key);
   console.log("User is:", user);
-  if (user) {
-    const role = user.role;
-    if (hasPermission(moduleName, role, permissionType)) {
-      console.log("Permission is allowed.");
-    } else {
-      next({
-        status: "Bad Request",
-        message: `${permissionType} Permission is not allowed.`
-      });
-    }
-  }
-  next();
-};
+  const { id } = user;
+  const getUserRepository:UserRepository = new UserRepository();
+
+  getUserRepository.findOne({_id:id}).then(
+    (data) => {
+      console.log(data);
+      req.users = data ;
+      next();
+      return next();
+      //  if (hasPermission(moduleName, user.role, permissionType)) {
+      //     console.log("Permission is allowed.");
+      //   }else {
+      //           next({
+      //             status: "Bad Request",
+      //             message: `${permissionType} Permission is not allowed.`
+      //           });
+      //         }}).catch(err=>{if(!user){
+      //           next({status: "Bad Request",
+      //           message: "User is not found"});
+      //         }});
+      //   next();
+        })
+
+
+
+// if(!user){
+//   next({status: "Bad Request",
+//   message: "User is not found"});
+// }
+// if (hasPermission(moduleName, user.role, permissionType)) {
+//   console.log("Permission is allowed.");
+// }
+// next();
+// })
+//   // if (user) {
+//   //   const role = user.role;
+//   //   if (hasPermission(moduleName, role, permissionType)) {
+//   //     console.log("Permission is allowed.");
+//   //   } else {
+//   //     next({
+//   //       status: "Bad Request",
+//   //       message: `${permissionType} Permission is not allowed.`
+//   //     });
+//   //   }
+//   // }
+//   // next();
+      }

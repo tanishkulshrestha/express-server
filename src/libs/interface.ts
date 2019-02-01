@@ -1,3 +1,4 @@
+import { Request } from 'express';
 import { TRAINEEE } from "./constants";
 
 export interface IPermission {
@@ -7,4 +8,7 @@ export interface IPermission {
     delete: string[];
     update: string[];
   };
+}
+export interface IUserRead extends Request {
+  users:any
 }

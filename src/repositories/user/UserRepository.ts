@@ -10,6 +10,13 @@ export default class UserRepository {
   constructor() {
     this.model = userModel;
   }
+  public count():mongoose.Promise<number>{
+    return this.model.countDocuments({});
+  }
+  public findOne(query):mongoose.Promise<IUserModel>{
+    return this.model.findOne(query);
+
+  }
   public create(data: any): Promise<IUserModel> {
     console.log("----------Inside Create---------", data);
     return this.model.create({
@@ -34,14 +41,6 @@ export default class UserRepository {
   }
   public read(data: any) {
     console.log("----------Inside Read------", data);
-    this.model
-      .find({})
-      .then(data => {
-        console.log(data);
-      })
-      .catch(err => {
-        console.log("Error");
-      });
-    return console.log(data);
+    return this.model.find(data);
   }
 }

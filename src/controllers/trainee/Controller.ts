@@ -10,28 +10,29 @@ class TraineeController {
   }
 
   get(req: Request, res: Response) {
-    console.log("Get method");
-    const data = [
-      {
-        name: "trainee1"
-      },
-      {
-        name: "trainee2"
+  console.log("Get method");
+      const data = [
+        {
+          name: "user1"
+        },
+        {
+          name: "user2"
+        }
+      ];
+      console.log(data);
+      if (!req.query.id) {
+        res.status(200).send(successHandler("Successfully fetch Users", data));
+        console.log("Successfully fetch Users");
+      } else {
+        const id = JSON.parse(req.query.id) - 1;
+        console.log(id);
+        res
+          .status(200)
+          .send(successHandler("Successfully fetch User", data[id]));
+        console.log("Successfully fetch 1 User");
       }
-    ];
-    console.log(data);
-    if (!req.query.id) {
-      res.status(200).send(successHandler("Successfully fetch trainees", data));
-      console.log("Successfully fetch trainees");
-    } else {
-      const id = JSON.parse(req.query.id) - 1;
-      console.log(id);
-      res
-        .status(200)
-        .send(successHandler("Successfully fetch trainees", data[id]));
-      console.log("Successfully fetch 1 trainee");
     }
-  }
+
   create(req: Request, res: Response, next: NextFunction) {
     const { name, id } = req.body;
     const data = [{ name, id }];
