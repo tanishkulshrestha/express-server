@@ -1,6 +1,6 @@
-import config from "./config/Configuration";
-import { Server } from "./Server";
+import config from './config/Configuration';
+import { Server } from './Server';
 
-console.log("Inside Config", config);
+console.log('Inside Config', config);
 const server = new Server(config);
 server.bootstrap().run();
