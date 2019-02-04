@@ -23,21 +23,23 @@ export default (moduleName, permissionType) => (
   const { id } = user;
   const getUserRepository = new UserRepository();
 
-  getUserRepository.findOne({_id: id}).then(
+  getUserRepository.findOne({ _id: id }).then(
     (data) => {
       console.log(data);
       if (!user) {
-  next({status: 'Bad Request', message: 'User is not found'});
+        next({ status: 'Bad Request', message: 'User is not found' });
       }
       if (hasPermission(moduleName, data.role, permissionType)) {
-          console.log('Permission is allowed.');
-          req.body.users = data;
-          next();
-        } else {
-                next({
-                  message: `${permissionType} Permission is not allowed.`, status: 'Bad Request'});
-              }})
-              .catch((err) => {
-                next({ message: 'User is not found', status: 'Bad Request'});
-              });
-            };
+        console.log('Permission is allowed.');
+        req.users = data;
+        next();
+      } else {
+        next({
+          message: `${permissionType} Permission is not allowed.`, status: 'Bad Request'
+        });
+      }
+    })
+    .catch((err) => {
+      next({ message: 'User is not found', status: 'Bad Request' });
+    });
+};

@@ -1,4 +1,5 @@
 import { NextFunction , Request, Response } from 'express';
+import { IUserRead } from '../../libs/interface';
 import successHandler from '../../libs/routes/successHandler';
 import UserRepository from '../../repositories/user/UserRepository';
 class UserController {
@@ -9,8 +10,8 @@ public static getInstance() {
     return UserController.instance;
   }
   private static instance: UserController;
- public get(req: Request, res: Response) {
-    console.log(req.body.users);
+ public get(req: IUserRead, res: Response) {
+    console.log(req.users);
     // const repository= new UserRepository();
     console.log('Get method');
     // console.log("----------------->>>>",req.query.id);
@@ -21,7 +22,7 @@ public static getInstance() {
     // })
     // .catch((err) => { throw err }  );
     //   console.log("Successfully fetch user");
-    res.status(200).send(successHandler('Successfully fetch user', req.body.users ));
+    res.status(200).send(successHandler('Successfully fetch user', req.users ));
   }
 
   public create(req: Request, res: Response, next: NextFunction) {
