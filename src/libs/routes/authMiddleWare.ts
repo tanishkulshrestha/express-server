@@ -35,7 +35,7 @@ export default (moduleName, permissionType) => (
         next();
       } else {
         next({
-          message: `${permissionType} Permission is not allowed.`, status: 'Bad Request'
+          message: `${permissionType} Permission is not allowed.`, status: 'Bad Request',
         });
       }
     })
