@@ -1,18 +1,18 @@
-import * as mongoose from "mongoose";
-import UserRepository from "../repositories/user/UserRepository";
+import * as mongoose from 'mongoose';
+import UserRepository from '../repositories/user/UserRepository';
 
 function seed() {
-  console.log("............");
+  console.log('............');
 
   const repository = new UserRepository();
 
-  //repository.create({ id: "4", name: "abc" });
+  // repository.create({ id: "4", name: "abc" });
   // repository.delete({ name: "xyz" });
   // repository.update({ name: "xyz" });
-  //repository.read({id});
-  repository.count().then(count=>{if(count===0){
-    repository.create({ name: "Head-Trainer" , role: "head-trainer" , email:"head.trainer@successive.tech" });
-    repository.create({ name: "Trainer" , role: "trainer" , email:"trainer@successive.tech" });
+  // repository.read({id});
+  repository.count().then((count): void => { if (count === 0) {
+    repository.create({ name: 'Head-Trainer' , role: 'head-trainer' , email: 'head.trainer@successive.tech' });
+    repository.create({ name: 'Trainer' , role: 'trainer' , email: 'trainer@successive.tech' });
   }});
 }
 

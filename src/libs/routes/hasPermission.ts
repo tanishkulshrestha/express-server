@@ -1,6 +1,5 @@
+import { HEAD_TRAINER, permissions, TRAINEE, TRAINEEE, TRAINER } from '../constants';
 import { IPermission } from '../interface';
-import {HEAD_TRAINER, permissions, TRAINEE, TRAINER, TRAINEEE} from "../constants";
-
 export default function hasPermission(
   moduleName: string,
   role: string,

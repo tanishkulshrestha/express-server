@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { TRAINEEE } from "./constants";
+import { TRAINEEE } from './constants';
 
 export interface IPermission {
   traineee: {
@@ -10,5 +10,5 @@ export interface IPermission {
   };
 }
 export interface IUserRead extends Request {
-  users:any
+  users: any;
 }
