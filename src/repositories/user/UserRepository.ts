@@ -2,27 +2,25 @@ import * as mongoose from 'mongoose';
 import VersionableRepository from '../versionable/VersionableRepository';
 import IUserModel from './IUserModel';
 import { userModel } from './UserModel';
-export default class UserRepository extends VersionableRepository <IUserModel , mongoose.Model<IUserModel> {
-  public static generateObjectId() {
-    return String(mongoose.Types.ObjectId());
-  }
+export default class UserRepository extends VersionableRepository <IUserModel , mongoose.Model<IUserModel> > {
   private model: mongoose.Model<IUserModel>;
   constructor() {
-    this.model = userModel;
+    super();
   }
-  public count(): mongoose.Promise<number> {
-    return this.model.countDocuments({});
-  }
-  public findOne(query): mongoose.Promise<IUserModel> {
-    return this.model.findOne(query);
+  // public count(): mongoose.Promise<number> {
+  //   return this.model.countDocuments({});
+  // }
+  // public findOne(query): mongoose.Promise<IUserModel> {
+  //   return this.model.findOne(query);
 
-  }
+  // }
   public create(data: any): Promise<IUserModel> {
     console.log('----------Inside Create---------', data);
-    return this.model.create({
-      ...data,
-      _id: UserRepository.generateObjectId(),
-    });
+    return this.genericCreate(data, false);
+    // return this.model.create({
+    //   ...data,
+    //   _id: UserRepository.generateObjectId(),
+    // });
   }
 
   public delete(data: any): any {
@@ -32,12 +30,14 @@ export default class UserRepository extends VersionableRepository <IUserModel , 
       else {console.log('Delete'); }
     });
   }
-  public update(fromdata: any, todata: any ) {
+  public update(data: any) {
     console.log('----------Inside Update------');
-    this.model.updateOne(fromdata, todata, (err) => {
-      if (err) { console.log('Error', err); }
-      else { console.log('Update'); }
-    });
+    console.log(data, ': data');
+    return this.genericUpdate(data);
+    // this.model.updateOne(fromdata, todata, (err) => {
+    //   if (err) { console.log('Error', err); }
+    //   else { console.log('Update'); }
+    // });
   }
   public read(data: any) {
     console.log('----------Inside Read------', data);

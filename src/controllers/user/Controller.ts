@@ -26,22 +26,28 @@ public static getInstance() {
   }
 
   public create(req: Request, res: Response, next: NextFunction) {
-    const { name, id } = req.body;
-    const data = [{ name, id }];
+    const { name, id, email, role } = req.body;
+    const data = { name, id , email, role};
     if (!id) {
       next({ status: 'Bad Request', message: 'ID is Not Present' });
     } else if (!name) {
       next({ status: 'Bad Request', message: 'Name is Not Present' });
+    } else if (!email) {
+      next({ status: 'Bad Request', message: 'Email is Not Present' });
+    } else if (!role) {
+      next({ status: 'Bad Request', message: 'Role is Not Present' });
     } else {
+      const userRepository = new UserRepository();
+      userRepository.create(data);
       res
         .status(200)
         .send(successHandler('Successfully Created Users', data));
   }}
 public update(req: Request, res: Response, next: NextFunction) {
-  const { name1, id1, role1 } = req.query;
+  const { name1, id1 } = req.query;
   console.log(req.query);
   const updateRepository = new UserRepository();
-  updateRepository.update({ _id: id1 }, { name: name1, role: role1  });
+  updateRepository.update({ _id: id1, name: name1  });
   console.log(req.body);
   if (!id1) {
       next({ status: 'Bad Request', message: 'ID is Required' });

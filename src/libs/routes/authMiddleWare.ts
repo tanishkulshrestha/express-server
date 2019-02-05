@@ -40,6 +40,7 @@ export default (moduleName, permissionType) => (
       }
     })
     .catch((err) => {
+      console.log(err);
       next({ message: 'User is not found', status: 'Bad Request' });
     });
 };
