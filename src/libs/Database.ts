@@ -11,7 +11,6 @@ public static open(mongoUri) {
         .then(() => {
           console.log('Successfully Connected');
           seed();
-          // mongoose.connection.on('open', seed());
           resolve();
         })
         .catch((err) => {
