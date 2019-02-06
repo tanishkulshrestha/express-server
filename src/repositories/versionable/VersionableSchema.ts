@@ -1,22 +1,21 @@
 import * as mongoose from 'mongoose';
-import IVersionableModel from './IVersionableModel';
 export default class VersionableSchema extends mongoose.Schema {
-  constructor(baseSchema: any, options: any) {
+  constructor(options: any, collection: any) {
     const versionable = Object.assign({
-      createdAt : {
-        default : Date,
-        required : true,
-        },
-      deletedAt : {
-        required : false,
-        type : Boolean,
+      createdAt: {
+        default: Date.now,
+        required: true,
+        type: Date,
       },
-     originalId : {
-       required : true,
-       type : String,
+      deletedAt: {
+        type: Date,
+      },
+      originalId: {
+        required: false,
+        type: String,
       },
     }, options);
-    super(versionable, options);
+    super(versionable, collection);
   }
 
 }

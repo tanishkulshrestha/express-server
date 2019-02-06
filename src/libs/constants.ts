@@ -7,8 +7,8 @@ const permissions: IPermission = {
   traineee: {
     delete: [HEAD_TRAINER],
     read: [TRAINEE, TRAINER, HEAD_TRAINER],
-    update: [TRAINER, HEAD_TRAINER],
-    write: [TRAINER, HEAD_TRAINER],
+    update: [HEAD_TRAINER],
+    write: [HEAD_TRAINER],
   },
 };
 export { TRAINEEE, HEAD_TRAINER, TRAINEE, TRAINER, permissions };

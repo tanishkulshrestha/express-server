@@ -1,3 +1,5 @@
+import { isNullOrUndefined } from 'util';
+
 export default (config) => (req, res, next) => {
   console.log('Inside Middleware');
   const keys = Object.keys(config);
@@ -17,7 +19,7 @@ export default (config) => (req, res, next) => {
       if (validatedValues.length !== values.length) {
         console.log('ERROR----');
         next({
-          message: errMessage || `${key} is required` || 'Error Message' , status: 'Bad Request',
+          message: errMessage || `${key} is required` || 'Error Message', status: 'Bad Request',
         });
       }
     }
@@ -28,10 +30,14 @@ export default (config) => (req, res, next) => {
 
       values.forEach(function setDefault(x) {
         console.log('*******************');
-        if (x === '') {
+        if (isNullOrUndefined(x)) {
+          x = item.default;
+          console.log('*******DEFAULT VALUE ', x);
+        } else if (x === '') {
           x = item.default;
           console.log('**DEFAULT VALUE ', x);
-        } else {
+        }
+        else {
           x = values;
           console.log('**SET VALUE', x);
         }
@@ -42,7 +48,8 @@ export default (config) => (req, res, next) => {
       if (validatedValues.length !== values.length) {
         console.log(config[key].errorMessage, '***');
         console.log(`${key} is not String`);
-        next({message: errMessage || `${key} is not String` || 'Error Message',
+        next({
+          message: errMessage || `${key} is not String` || 'Error Message',
           status: 'Bad Request',
         });
       }
@@ -68,21 +75,20 @@ export default (config) => (req, res, next) => {
       const validatedValues = values.filter((item) => typeof item === 'object');
       if (validatedValues.length !== values.length) {
         console.log(`${key} is not Object`);
-        next({ message: errMessage || `${key} is not Object` || 'Error Message',
+        next({
+          message: errMessage || `${key} is not Object` || 'Error Message',
           status: 'Bad Request',
 
         });
       }
     }
-    if (item.custom) {
-      values.forEach(function custom(v) {
-        values.custom(v);
-      });
+    if (item && item.custom) {
+      item.custom('');
     }
 
     if (item && item.number) {
       const validatedValues = values.filter(
-        (item) => (!isNaN(item) || item === '') === true,
+        (item) => (!isNaN(item) || item === '' || item === undefined) === true,
       );
       if (validatedValues.length !== values.length) {
         console.log(`${key} is not a number`);
