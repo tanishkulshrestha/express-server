@@ -1,6 +1,4 @@
 import { Request } from 'express';
-import { TRAINEEE } from './constants';
-
 export interface IPermission {
   traineee: {
     read: string[];
@@ -11,4 +9,5 @@ export interface IPermission {
 }
 export interface IUserRead extends Request {
   users: any;
+  skipLimit: any;
 }
