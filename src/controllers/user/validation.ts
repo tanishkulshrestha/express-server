@@ -49,6 +49,11 @@ const validation = {
       number: true,
       required: false,
     },
+    sort: {
+      errorMessage: 'Sort is invalid',
+      in: ['query'],
+    },
+
   },
   login: {
     email: {
@@ -68,7 +73,7 @@ const validation = {
     dataToUpdate: {
       custom: (value) => {
         console.log('Value', value);
-},
+      },
       errorMessage: 'dataToUpdate is required',
       in: ['body'],
       isObject: true,

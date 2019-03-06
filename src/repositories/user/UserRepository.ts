@@ -24,7 +24,9 @@ export default class UserRepository extends VersionableRepository<IUserModel, mo
   public async read(data: any): Promise<IUserModel> {
     console.log('----------Inside Read------');
     const { role } = data;
-    const a = await this.list(role, undefined, { skip: Number(data.skip), limit: Number(data.limit) });
+    console.log((Object as any).values(JSON.parse(data.sort)));
+    const a = await this.list(role, undefined, {  limit: Number(data.limit), skip: Number(data.skip),
+      sort: JSON.parse(data.sort) });
     return a;
   }
 }
