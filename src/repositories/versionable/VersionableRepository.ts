@@ -1,58 +1,89 @@
 import * as mongoose from 'mongoose';
-import { userModel } from './../user/UserModel';
 
 export default class VersionableRepository<D extends mongoose.Document, M extends mongoose.Model<D>> {
   public static generateObjectId() {
     return String(mongoose.Types.ObjectId());
   }
   private modelType: M;
-  constructor() {
-    this.modelType = userModel;
-  }
-  public count(): mongoose.Promise<number> {
-    return this.modelType.countDocuments({});
-  }
-  public findOne(query): mongoose.Promise<D> {
-    return this.modelType.findOne(query).lean();
-
+  constructor(model) {
+    this.modelType = model;
   }
 
-  public genericCreate(data: any, flag: any) {
-    const id = VersionableRepository.generateObjectId();
-    if (!flag) {
-      return this.modelType.create(
-        {
-          ...data, _id: id, originalId: id,
-
-        });
+  public async list(query, projection, options): Promise<D> {
+    const count = await this.count();
+    return this.modelType.find(query, projection, options);
+  }
+  public async count(): mongoose.Query<number> {
+    const temp = await this.modelType.countDocuments().lean();
+    if (!temp) { throw ({ error: 'Error Occurred in count', status }); }
+    return temp;
+  }
+  public async findOne(query): Promise<D> {
+    try {
+      const temp = await this.modelType.findOne(query).lean();
+      return temp;
     }
-    return this.modelType.create(
-      {
-        ...data, _id: id,
-
-      });
+    catch (e) {
+      throw (e);
+    }
   }
 
-  public genericUpdate(data: any) {
-    console.log('------------??????????????', data._id);
+  public async genericCreate(data: any, flag: any): Promise<D> {
+    try {
+      const id = VersionableRepository.generateObjectId();
+      if (!flag) {
+        const result1 = await this.modelType.create(
+          {
+            ...data, _id: id, originalId: id,
 
-    console.log('Inside req query', { originalId: data._id });
+          });
+        return result1;
+      } else {
+        const result = await this.modelType.create(
+          {
+            ...data, _id: id,
 
-    return this.findOne({ originalId: data._id, deletedAt: { $exists: false } }).then((result, error) => {
+          });
+        return result;
+      }
+    }
+    catch (e) {
+      throw (e);
+    }
+  }
+
+  public async genericUpdate(data: any): Promise<D> {
+    try {
+      const { dataToUpdate } = data;
+      const result = await this.findOne({ originalId: data._id, deletedAt: { $exists: false } });
       const newId = result._id;
       delete result._id;
-      const newObj = Object.assign(result, { name: data.name });
-      this.genericCreate(newObj, true);
-      this.modelType.updateOne({ _id: newId, deletedAt: { $exists: false } }, { deletedAt: Date.now() }).then(
-        (err) => console.log(err),
-      );
-    });
-
+      const newObj = Object.assign(result, dataToUpdate);
+      const temp = await this.genericCreate(newObj, true);
+      const result1 = await this.modelType.updateOne({ _id: newId, deletedAt: { $exists: false } },
+        { deletedAt: Date.now() });
+      return result1;
+    }
+    catch (e) {
+      throw (e);
+    }
   }
-  public genericDelete(data: any) {
-    console.log(data);
-    this.modelType.updateOne({ _id: data._id, deletedAt: { $exists: false } }, { deletedAt: Date.now() }).then(
-      (err) => console.log(err),
-    );
+
+  public async genericDelete(data: any): Promise<D> {
+    try {
+      const result = await this.modelType.updateOne({ _id: data._id, deletedAt: { $exists: false } },
+        { deletedAt: Date.now() });
+      if (result.nModified === 0) {
+        console.log('Already Deleted');
+        throw ({ error: `undefined data` });
+      }
+      else {
+        return result;
+      }
+    }
+    catch (e) {
+      console.log('inside catch ------------------------');
+      throw ({ error: `undefined data` });
+    }
   }
 }

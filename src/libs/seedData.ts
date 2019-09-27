@@ -1,20 +1,17 @@
+import { hashSync } from 'bcrypt';
+import config from '../config/Configuration';
 import UserRepository from '../repositories/user/UserRepository';
 
-function seed() {
-  console.log('............');
-
+async function seed() {
+  const pass1 = config.password1;
+  const hash1 = hashSync(pass1, 10);
   const repository = new UserRepository();
-
-  // repository.create({ id: "4", name: "abc" });
-  // repository.delete({ name: "xyz" });
-  // repository.update({ name: "xyz" });
-  // repository.read({id});
-  repository.count().then((count): void => {
-    if (count === 0) {
-      repository.create({ name: 'Head-Trainer', role: 'head-trainer', email: 'head.trainer@successive.tech' });
-      repository.create({ name: 'Trainer', role: 'trainer', email: 'trainer@successive.tech' });
+  const count = await repository.count();
+  if ( count === 0 ) {
+      repository.create({
+        email: 'head.trainer@successive.tech', name: 'Head-Trainer', password: hash1, role: 'head-trainer' });
+      repository.create({ name: 'Trainer', role: 'trainer', email: 'trainer@successive.tech', password: hash1 });
     }
-  });
-}
+  }
 
 export default seed;

@@ -1,27 +1,32 @@
 import * as mongoose from 'mongoose';
 import VersionableRepository from '../versionable/VersionableRepository';
 import IUserModel from './IUserModel';
+import { userModel } from './UserModel';
 export default class UserRepository extends VersionableRepository<IUserModel, mongoose.Model<IUserModel>> {
-  private model: mongoose.Model<IUserModel>;
   constructor() {
-    super();
+    super(userModel);
   }
-  public create(data: any): Promise<IUserModel> {
+  public async create(data: any): Promise<IUserModel> {
     console.log('----------Inside Create---------', data);
-    return this.genericCreate(data, false);
+    return await this.genericCreate(data, false);
   }
 
-  public delete(data: any): any {
+  public async delete(data: any): Promise<IUserModel> {
     console.log('----------Inside Delete------', data);
-    return this.genericDelete(data);
+    return await this.genericDelete(data);
   }
-  public update(data: any) {
+  public async update(data: any): Promise<IUserModel> {
     console.log('----------Inside Update------');
-    console.log(data, ': data');
-    return this.genericUpdate(data);
+    const temp = await this.genericUpdate(data);
+    if (!temp) { throw ({ error: 'Error Occurred in count', status }); }
+    return temp;
   }
-  public read(data: any) {
-    console.log('----------Inside Read------', data);
-    return this.model.find(data);
+  public async read(data: any): Promise<IUserModel> {
+    console.log('----------Inside Read------');
+    const { role } = data;
+    console.log((Object as any).values(JSON.parse(data.sort)));
+    const a = await this.list(role, undefined, {  limit: Number(data.limit), skip: Number(data.skip),
+      sort: JSON.parse(data.sort) });
+    return a;
   }
 }

@@ -9,8 +9,7 @@ const validation = {
     id: {
       custom: (value) => {
         console.log('Value', value);
-        // throw { error: "Error Occurred", message: "Message" };
-      } ,
+      },
       in: ['body'],
       required: true,
       string: true,
@@ -21,7 +20,7 @@ const validation = {
       regex: /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/,
       required: true,
     },
-      role: {
+    role: {
       errorMessage: 'role is required',
       in: ['body'],
       regex: /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/,
@@ -36,15 +35,6 @@ const validation = {
     },
   },
   get: {
-    id: {
-      custom: (value) => {
-        console.log('Value', value);
-        // throw { error: "Error Occurred", message: "Message" };
-      } ,
-      in: ['body'],
-      required: true,
-      string: true,
-    },
     limit: {
       default: 10,
       errorMessage: 'Limit is invalid',
@@ -59,18 +49,38 @@ const validation = {
       number: true,
       required: false,
     },
+    sort: {
+      errorMessage: 'Sort is invalid',
+      in: ['query'],
+    },
+
+  },
+  login: {
+    email: {
+      errorMessage: 'Email is required',
+      in: ['body'],
+      regex: /^[A-Za-z0-9._%+-]+@successive.tech$/,
+      required: true,
+    },
+    password: {
+      errorMessage: 'Password is required',
+      in: ['body'],
+      required: true,
+      string: true,
+    },
   },
   update: {
     dataToUpdate: {
       custom: (value) => {
         console.log('Value', value);
-        // throw { error: "Error Occurred", message: "Message" };
-      } ,
+      },
+      errorMessage: 'dataToUpdate is required',
       in: ['body'],
       isObject: true,
       required: true,
     },
     id: {
+      errorMessage: 'Id is required',
       in: ['body'],
       required: true,
       string: true,

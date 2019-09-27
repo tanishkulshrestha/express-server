@@ -5,14 +5,11 @@ import UserRepository from './../../repositories/user/UserRepository';
 import { IUserRead } from './../interface';
 import hasPermission from './hasPermission';
 
-export default (moduleName, permissionType) => (
+export default (moduleName, permissionType) => async (
   req: IUserRead,
   res: Response,
   next: NextFunction,
 ) => {
-  console.log('fgfh');
-  console.log('Inside AuthMiddleware ', moduleName, permissionType);
-  console.log(req.headers.authorization, '------');
   const token = req.headers.authorization;
   console.log('Token is :', token);
   const { key } = Configuration;
@@ -23,24 +20,22 @@ export default (moduleName, permissionType) => (
   const { id } = user;
   const getUserRepository = new UserRepository();
 
-  getUserRepository.findOne({ _id: id }).then(
-    (data) => {
-      console.log(data);
-      if (!user) {
-        next({ status: 'Bad Request', message: 'User is not found' });
-      }
-      if (hasPermission(moduleName, data.role, permissionType)) {
-        console.log('Permission is allowed.');
-        req.users = data;
-        next();
-      } else {
-        next({
-          message: `${permissionType} Permission is not allowed.`, status: 'Bad Request',
-        });
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-      next({ message: 'User is not found', status: 'Bad Request' });
+  const data = await getUserRepository.findOne({ _id: id });
+  if (!data) {
+    throw ({ error: 'Error Occurred in findOne', status });
+  }
+  console.log('Data is:', data, 'Data Role:', data.role);
+  if (!user) {
+    next({ status: 'Bad Request', message: 'User is not found' });
+  }
+  if (hasPermission(moduleName, data.role, permissionType)) {
+    console.log('Permission is allowed.');
+    req.users = data;
+    next();
+  }
+  else {
+    next({
+      message: `${permissionType} Permission is not allowed.`, status: 'Bad Request',
     });
+  }
 };
